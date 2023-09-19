@@ -24,18 +24,21 @@ def process_receipts():
 
 @app.route("/receipts/<_id>/points", methods=["GET"])
 def get_points(_id):
-    receipt = Receipts.query.filter_by(id=_id).first()
-    if receipt is None:
-        return jsonify({"error": "Not found!"}), 404
-    items = Items.query.filter_by(receipt=receipt.id).all()
+    try:
+        receipt = Receipts.query.filter_by(id=_id).first()
+        if receipt is None:
+            return jsonify({"error": "Not found!"}), 404
+        items = Items.query.filter_by(receipt=receipt.id).all()
 
-    points = alpha_numeric(receipt_name=receipt.retailer)
-    points += round_dollar(amount=receipt.total)
-    points += multiple_quarter(amount=receipt.total)
-    points += items_even(list_length=len(items))
-    for item in items:
-        points += description_length(description=item.shortDescription,
-                                     price=float(item.price))
-    points += date_odd(date=receipt.purchaseDate)
-    points += purchase_time(time=receipt.purchaseTime)
-    return jsonify({"points": points}), 200
+        points = alpha_numeric(receipt_name=receipt.retailer)
+        points += round_dollar(amount=receipt.total)
+        points += multiple_quarter(amount=receipt.total)
+        points += items_even(list_length=len(items))
+        for item in items:
+            points += description_length(description=item.shortDescription,
+                                         price=float(item.price))
+        points += date_odd(date=receipt.purchaseDate)
+        points += purchase_time(time=receipt.purchaseTime)
+        return jsonify({"points": points}), 200
+    except Exception as e:
+        return jsonify({"error": "Server error"}), 500
