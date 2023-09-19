@@ -25,6 +25,8 @@ def process_receipts():
 @app.route("/receipts/<_id>/points", methods=["GET"])
 def get_points(_id):
     receipt = Receipts.query.filter_by(id=_id).first()
+    if receipt is None:
+        return jsonify({"error": "Not found!"}), 404
     items = Items.query.filter_by(receipt=receipt.id).all()
 
     points = alpha_numeric(receipt_name=receipt.retailer)
