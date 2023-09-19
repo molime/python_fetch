@@ -18,6 +18,7 @@ Start Docker on your local computer and follow these instructions:
     ```
 
 This will start the app in a Docker container that can be reached through port 5000. The following is the correct way to send requests to the app:
+
 http://127.0.0.1:5000/receipts/process
 
 http://127.0.0.1:5000/receipts/1/points
