@@ -17,8 +17,7 @@ Start Docker on your local computer and follow these instructions:
     docker run --publish 5000:5000 python-fetch
     ```
 
-This will start the app in a Docker container that can be reached through port 5000. For example:
+This will start the app in a Docker container that can be reached through port 5000. The following is the correct way to send requests to the app:
 http://127.0.0.1:5000/receipts/process
-http://127.0.0.1:5000/receipts/1/points
 
-The examples above are the correct way to reach the endpoints in the app
+http://127.0.0.1:5000/receipts/1/points
